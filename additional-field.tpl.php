@@ -230,6 +230,7 @@
               // Hide price for Enterprise Store End User
               /* var_dump($user->roles);die; */
               if((in_array('end user', $user->roles) && $domain_is_store) || in_array('anonymous user', $user->roles)){
+              /* if((in_array('end user', $user->roles) && $domain_is_store) ){ */
                 $priceIddiv = "";
                 /* $priceIddiv = "<span>&nbsp;</span>"; */
                 $pricemessagediv ="";
