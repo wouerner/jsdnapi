@@ -3,7 +3,7 @@
 </script>
 
 <?php
-/* die('die'); */
+ //die('die'); 
     global $language;
     global $user;
     global $_domain;
@@ -83,6 +83,7 @@
 
           $jsdnDeepLink = $jsdn_url.'/jsdn/deeplink/addItemToCart.action?offerCode='.$offercode.'&'.$offercode.'.fromBuy=true';
 
+//var_dump($user->roles);die;
           if ($items!= 0) {
             if(isset($notactivated) && in_array('end user', $user->roles)){
               $message="<div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title' style='color:#fff'>".t('Alert')."</h4></div><div class='modal-body'><p>".t('The pre-requisites required to launch the stack is yet to be configured. If you wish to notify your administrator, click on Notify Administrator. We will send a notification email to the administrator to perform the necessary actions.')."</p></div><div class='modal-footer'><input type='hidden' value='".trim($notactivated,", ")."' class='notifyItems'/><a class='btn btn-default notifyButton btn-primary' href='' offer='".$offercode."' offername='".$offname."' type='continue'>".t("Notify Administrator")."</a><span class='btn btn-default' data-dismiss='modal'>".t('Cancel')."</span></div></div>";
@@ -92,6 +93,7 @@
               $message="<div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title' style='color:#fff'>".t('Alert')."</h4></div><div class='modal-body'><p>".t('Sorry, you cannot proceed further as the Vendor account details are not available. Please click on Add Account button to add the details.')."</p></div><div class='modal-footer'><a class='btn btn-default popupaction btn-primary' href='".$jsdnDeepLink."&accountconfig=true' offer='".$offname."' type='continue'>".t("Add Account")."</a><span class='btn btn-default' data-dismiss='modal'>".t('Cancel')."</span></div></div>";
             }
 
+//var_dump($message);die;
             if($message){
                $priceId="<a href='#' class='message-popup launch-button' plandiv='message-div' title='Alert' rel='width:900;resizable:false;position:[center,60];'>".t("Launch")."</a><div style='display:none' id='message-div-content'>".$message."</div>";
             }else{
@@ -101,6 +103,7 @@
               $priceId="<a class='launch-button' href='".$jsdnDeepLink."'>".t("Launch")."</a>";
           }
 
+//var_dump(!user_is_logged_in());die;
           if(!user_is_logged_in()){
             $priceId="<a class='launch-button ordersignin' offercode='".$offercode."' dlink='".$jsdnDeepLink."' href='#'>".t("Launch")."</a>";
           }
@@ -112,7 +115,7 @@
       <h2><?php print $offname; ?></h2>
       <p class="offer_description mb-0"><?php print $offdescription_iaas; ?></p>
       <?php if(user_access('jsdn offer display')){  ?>
-        <?php  //print $priceId;?>
+        <?php  print $priceId;?>
       <?php } ?>
     </div>
     <?php  }  else {
@@ -228,7 +231,7 @@
                 $pricemessagediv ="<span class='data-details message'>".$datamessage."</span>";
               }
               // Hide price for Enterprise Store End User
-              /* var_dump($user->roles);die; */
+              // var_dump($user->roles);die; 
               if((in_array('end user', $user->roles) && $domain_is_store) || in_array('anonymous user', $user->roles)){
               /* if((in_array('end user', $user->roles) && $domain_is_store) ){ */
                 $priceIddiv = "";
