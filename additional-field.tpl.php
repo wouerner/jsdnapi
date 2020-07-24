@@ -3,7 +3,6 @@
 </script>
 
 <?php
-/* die('die'); */
     global $language;
     global $user;
     global $_domain;
@@ -32,15 +31,21 @@
       }
 ?>
 
+
 <div class="col-md-12 carousel-div offer-carousel <?php echo ($onePage === true ? 'p-0' : ''); echo ($listOnly === true ? 'd-none' : '') ?>">
 		<ol class="carousel-indicators">
 			<?php
 				if(!$onePage):
-				$totalpager = ($totalCount);
-				$pages = round($totalpager / $perPage);
+          $totalpager = ($totalCount);
+          $pages = round($totalpager / $perPage);
 				for($pagindex=0; $pagindex < ($pages); $pagindex++){
       ?>
-					<li data-target="#myCarousel" data-slide-to="<?php echo $pagindex; ?>" <?php echo ($pagindex === 0 ? 'class="active"' : '' ); ?>></li>
+          <li
+            data-target="#myCarousel"
+            data-slide-to="<?php echo $pagindex; ?>"
+            <?php echo ($pagindex === 0 ? 'class="active"' : '' ); ?>
+          >
+          </li>
 				<?php
 			}
 			endif;
@@ -129,6 +134,7 @@
         //var_dump($json->Service->offers->offerList);
 
         for($i=0; $i < count($json->Service->offers->offerList); $i++){
+          /* var_dump($json->Service->offers->offerList[$i]); */
           $n= $i+1;
           $priceurl = $json->Service->offers->offerList[$i]->priceList[0]->priceid;
           $offname=$json->Service->offers->offerList[$i]->name;
@@ -188,6 +194,7 @@
                 }
               }
             }
+
           } else if ($orderPlacedForMultiSubOffer) {
             $orderPlacedForMultiSubOfferLink = $jsdn_url.'/jsdn/manageservice/manageServices.action?brdcrm=new&from=catalog&offerName='.urlencode($offname).'&accountconfig=true' ;
             $message= t("Looks like you already have an existing subscription or a saved order. Clicking on 'Proceed' will redirect you to Manage Subscriptions page, where you can add additional licenses to your existing subscription. <br><br>If you already have a saved order, navigate to Manage > Orders page and complete the order.")."";
@@ -238,11 +245,22 @@
             }
           }
         ?>
+        <!-- botão de Login para cafe-->
+        <?php
+          if( in_array('anonymous user', $user->roles) ) {
+            $priceId='<a
+              href="/cms/pt/%23"
+              class="btn-primary btn ctools-use-modal ctools-modal-modal-popup-medium"
+              data-toggle="modal"
+              data-target="#loginPopUp">Prosseguir</a>';
+          }
+        ?>
           <?php if($n%4 == 1){?><div class="item <?php if($n==1){?>active<?php }?>"><?php }?>
-            <div class="single-item <?php if(!user_is_logged_in()){?>not-loged-in2<?php }?>">
-                <h2><?php echo strlen($offname) > 80 ? substr($offname, 0, 80) . '..' : $offname; ?>
-        </h2>
-          <p class="offer_description mb-0"><?php echo $offdescription; ?></p>
+            <div
+              class="single-item <?php if(!user_is_logged_in()){?>not-loged-in2<?php }?>"
+            >
+                <h2><?php echo strlen($offname) > 80 ? substr($offname, 0, 80) . '..' : $offname; ?></h2>
+                <p class="offer_description mb-0"><?php echo $offdescription; ?></p>
                 <?php if(user_access('jsdn offer display')){ ?>
                   <?php print $priceIddiv;?>
                   <?php  print $pricemessagediv;?>
